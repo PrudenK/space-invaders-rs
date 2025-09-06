@@ -16,7 +16,6 @@ impl GameState {
     }
 
     pub fn set_up_new_game(self: &mut GameState) {
-
         for i in 0..HEIGHT {
             for j in 0..WIDTH {
                 if i > 0 && i < 10{
@@ -43,15 +42,14 @@ impl GameState {
             for j in 0..WIDTH {
                 match self.board[i][j] {
                     Cell::Empty  => print!("   "),
-                    Cell::Alien => print!("\x1b[37m~X~\x1b[0m"),
+                    Cell::Alien  => print!("\x1b[37m~X~\x1b[0m"),
                     Cell::Player => print!("\x1b[37m<A>\x1b[0m"),
                     Cell::Bullet => print!("\x1b[41m | \x1b[0m"),
                     Cell::Border => print!("\x1b[100m   \x1b[0m"),
                 }
             }
-            println!();
+            print!("\r\n"); // <-- importante: return + line feed
         }
     }
-
 
 }
