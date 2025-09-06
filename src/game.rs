@@ -1,0 +1,67 @@
+
+const WIDTH: usize = 13;
+const HEIGHT: usize = 20;
+
+#[derive(Clone, Copy)]
+pub enum Cell {
+    Empty,
+    Player,
+    Alien,
+    Bullet,
+    Border
+}
+
+
+pub struct Game_state {
+    pub board: [[Cell; WIDTH]; HEIGHT],
+
+}
+
+impl Game_state {
+
+    pub fn new() -> Self {
+        Game_state {
+            board: [[Cell::Empty; WIDTH]; HEIGHT],
+        }
+    }
+
+    pub fn set_up_new_game(self: &mut Game_state) {
+
+        for i in 0..HEIGHT {
+            for j in 0..WIDTH {
+                if i > 0 && i < 10{
+                    if j % 2 == 0 && j < 10 && j > 0{
+                        self.board[i][j] = Cell::Alien;
+                    }else{
+                        self.board[i][j] = Cell::Empty;
+                    }
+                }else{
+                    self.board[i][j] = Cell::Empty;
+                }
+
+                if i == 0 || j == 0 || i == HEIGHT -1 || j == WIDTH -1{
+                    self.board[i][j] = Cell::Border;
+                }
+            }
+        }
+
+        self.board[HEIGHT-2][WIDTH/2] = Cell::Player;
+    }
+
+    pub fn print_format_board(&self) {
+        for i in 0..HEIGHT {
+            for j in 0..WIDTH {
+                match self.board[i][j] {
+                    Cell::Empty  => print!("   "),
+                    Cell::Alien => print!("\x1b[37m~X~\x1b[0m"),
+                    Cell::Player => print!("\x1b[37m<A>\x1b[0m"),
+                    Cell::Bullet => print!("\x1b[41m | \x1b[0m"),
+                    Cell::Border => print!("\x1b[100m   \x1b[0m"),
+                }
+            }
+            println!();
+        }
+    }
+
+
+}
