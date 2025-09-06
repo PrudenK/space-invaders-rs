@@ -1,31 +1,21 @@
+use crate::board::cell::Cell;
 
 const WIDTH: usize = 13;
 const HEIGHT: usize = 20;
 
-#[derive(Clone, Copy)]
-pub enum Cell {
-    Empty,
-    Player,
-    Alien,
-    Bullet,
-    Border
-}
 
-
-pub struct Game_state {
+pub struct GameState {
     pub board: [[Cell; WIDTH]; HEIGHT],
-
 }
 
-impl Game_state {
-
+impl GameState {
     pub fn new() -> Self {
-        Game_state {
+        GameState {
             board: [[Cell::Empty; WIDTH]; HEIGHT],
         }
     }
 
-    pub fn set_up_new_game(self: &mut Game_state) {
+    pub fn set_up_new_game(self: &mut GameState) {
 
         for i in 0..HEIGHT {
             for j in 0..WIDTH {
