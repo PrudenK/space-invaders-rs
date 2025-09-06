@@ -13,9 +13,10 @@ pub fn game_loop(game: &mut GameState) {
     let mut enemy_dir: i8 = 1;
     let mut last_enemy_move = Instant::now();
     let mut last_bullet_move = Instant::now();
+    let mut last_bullet_shooted = Instant::now();
 
     loop {
-        let end_game = player_controls(game);
+        let end_game = player_controls(game, &mut last_bullet_shooted);
 
         if end_game { break }
 

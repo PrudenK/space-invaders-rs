@@ -2,8 +2,10 @@ use std::time::{Duration, Instant};
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 
-pub fn shot_bullet(game: &mut GameState) {
-    if !is_a_bullet_active(game){
+pub fn shot_bullet(game: &mut GameState, last_bullet_shooted: &mut Instant) {
+    if !is_a_bullet_active(game) && last_bullet_shooted.elapsed() >= Duration::from_millis(500) {
+        *last_bullet_shooted = Instant::now();
+
         if let Some(j_player_index) = game.board[HEIGHT -2].iter().position(|&c| c == Cell::Player) {
             game.board[HEIGHT-3][j_player_index] = Cell::Bullet;
         }
