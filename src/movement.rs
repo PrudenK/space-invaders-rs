@@ -25,6 +25,9 @@ pub fn movement_loop(game: &mut GameState) {
                     side_move(game, 1);
                     game.print_format_board();
                 }
+                KeyCode::Up => {
+
+                }
                 KeyCode::Esc => {
                     println!("¡Juego terminado!\n");
                     break
@@ -37,7 +40,7 @@ pub fn movement_loop(game: &mut GameState) {
     }
 }
 
-fn clear_terminal(){
+pub fn clear_terminal(){
     execute!(stdout(), MoveTo(0,0), Clear(ClearType::All)).unwrap();
 }
 

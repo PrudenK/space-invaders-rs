@@ -3,6 +3,7 @@ use crossterm::terminal::{enable_raw_mode, disable_raw_mode};
 
 mod board;
 mod movement;
+mod enemy_movement;
 
 fn main() {
     enable_raw_mode().unwrap();
