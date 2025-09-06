@@ -1,7 +1,7 @@
 use crate::board::cell::Cell;
 
-const WIDTH: usize = 13;
-const HEIGHT: usize = 20;
+pub const WIDTH: usize = 13;
+pub const HEIGHT: usize = 20;
 
 
 pub struct GameState {
@@ -48,7 +48,7 @@ impl GameState {
                     Cell::Border => print!("\x1b[100m   \x1b[0m"),
                 }
             }
-            print!("\r\n"); // <-- importante: return + line feed
+            print!("\r\n");
         }
     }
 
