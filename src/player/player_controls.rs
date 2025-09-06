@@ -1,20 +1,18 @@
-use crossterm::{event, execute, terminal::{Clear, ClearType}, cursor::MoveTo};
-use std::io::stdout;
+use crossterm::{event};
 use std::time::Duration;
 use crossterm::event::{Event, KeyCode};
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 
-
-pub fn movement_loop(game: &mut GameState) -> bool {
+pub fn player_controls(game: &mut GameState) -> bool {
     if event::poll(Duration::from_millis(1)).unwrap() {
         if let Event::Key(key_event) = event::read().unwrap() {
             match key_event.code {
                 KeyCode::Left => {
-                    side_move(game, -1);
+                    move_player_horizontally(game, -1);
                 }
                 KeyCode::Right => {
-                    side_move(game, 1);
+                    move_player_horizontally(game, 1);
                 }
                 KeyCode::Up => {}
                 KeyCode::Esc => {
@@ -27,11 +25,7 @@ pub fn movement_loop(game: &mut GameState) -> bool {
     false
 }
 
-pub fn clear_terminal(){
-    execute!(stdout(), MoveTo(0,0), Clear(ClearType::All)).unwrap();
-}
-
-fn side_move(game: &mut GameState, direction: i8) {
+fn move_player_horizontally(game: &mut GameState, direction: i8) {
     if let Some(j_player_index) = game.board[HEIGHT -2].iter().position(|&c| c == Cell::Player) {
         if direction == 1{
             if j_player_index + 1 != WIDTH -1{

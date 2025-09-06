@@ -1,11 +1,9 @@
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
+use crate::aliens::alien_coords::AlienCoords;
 
-pub fn enemy_movement(board: &mut GameState, direction: i8) -> bool {
-    side_move(board, direction)
-}
 
-fn side_move(board: &mut GameState, direction: i8) -> bool{
+pub fn alien_movement(board: &mut GameState, direction: i8) -> bool{
     let mut went_down = false;
     let index_to_move = last_alien_index_to_move(board, direction);
 
@@ -29,7 +27,6 @@ fn side_move(board: &mut GameState, direction: i8) -> bool{
 }
 
 fn last_alien_index_to_move(board: &GameState, direction: i8) -> usize {
-
     let mut result = if direction == 1 { 0 } else { WIDTH -1 };
 
     for i in 1..HEIGHT{
@@ -49,7 +46,7 @@ fn last_alien_index_to_move(board: &GameState, direction: i8) -> usize {
             }
         }
    }
-
+    
     result
 }
 
@@ -74,22 +71,5 @@ fn alien_side_move(board: &mut GameState, direction: isize, down: bool){
                 board.board[i][j] = Cell::Alien;
             }
         }
-    }
-
-}
-
-
-
-
-
-#[derive(PartialEq, Copy, Clone, Debug)]
-struct AlienCoords {
-    x: u16,
-    y: u16
-}
-
-impl AlienCoords{
-    pub fn new(x: u16, y: u16) -> Self{
-        AlienCoords{x, y}
     }
 }

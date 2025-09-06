@@ -1,10 +1,11 @@
 use board::game_state::GameState;
-use crossterm::terminal::{enable_raw_mode, disable_raw_mode};
+use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
 
 mod board;
-mod movement;
-mod enemy_movement;
 mod game;
+mod utils;
+mod aliens;
+mod player;
 
 fn main() {
     enable_raw_mode().unwrap();
@@ -13,6 +14,8 @@ fn main() {
 
     game_state.set_up_new_game();
     game_state.print_format_board();
+
+
 
     game::game_loop(&mut game_state);
 

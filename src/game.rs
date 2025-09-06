@@ -1,11 +1,12 @@
 use std::thread;
 use std::time::{Duration, Instant};
 use crate::board::game_state::GameState;
-use crate::enemy_movement::enemy_movement;
-use crate::movement::{clear_terminal, movement_loop};
+use crate::aliens::alien_movement::alien_movement;
+use crate::player::player_controls::{player_controls};
+use crate::utils;
 
 pub fn game_loop(game: &mut GameState) {
-    clear_terminal();
+    utils::terminal::clear_terminal();
     game.print_format_board();
 
     let mut enemy_dir: i8 = 1;
@@ -13,19 +14,19 @@ pub fn game_loop(game: &mut GameState) {
 
     loop {
 
-        let end_game = movement_loop(game);
+        let end_game = player_controls(game);
 
         if end_game { break }
 
-        if last_enemy_move.elapsed() >= Duration::from_millis(300) {
-            let went_down = enemy_movement(game, enemy_dir);
+        if last_enemy_move.elapsed() >= Duration::from_millis(600) {
+            let went_down = alien_movement(game, enemy_dir);
             if went_down {
                 enemy_dir *= -1;
             }
             last_enemy_move = Instant::now();
         }
 
-        clear_terminal();
+        utils::terminal::clear_terminal();
         game.print_format_board();
 
         thread::sleep(Duration::from_millis(50));
