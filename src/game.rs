@@ -2,8 +2,8 @@ use std::thread;
 use std::time::{Duration, Instant};
 use crate::board::game_state::GameState;
 use crate::aliens::alien_movement::alien_movement;
-use crate::board::cell::Cell;
-use crate::player::player_controls::{get_bullet_coords, is_a_bullet_active, player_controls};
+use crate::player::bullet::manage_bullet_on_loop;
+use crate::player::player_controls::{player_controls};
 use crate::utils;
 
 pub fn game_loop(game: &mut GameState) {
@@ -27,23 +27,7 @@ pub fn game_loop(game: &mut GameState) {
             last_enemy_move = Instant::now();
         }
 
-        if is_a_bullet_active(game) {
-            if last_bullet_move.elapsed() >= Duration::from_millis(30) {
-                let (i_index, j_index) = get_bullet_coords(game);
-
-                if i_index != 999 && j_index != 999 {
-                    game.board[i_index][j_index] = Cell::Empty;
-
-                    match game.board[i_index -1][j_index] {
-                        Cell::Border => {},
-                        Cell::Alien => {
-                            game.board[i_index - 1][j_index] = Cell::Empty
-                        },
-                        _ => game.board[i_index - 1][j_index] = Cell::Bullet
-                    }
-                }
-            }
-        }
+        manage_bullet_on_loop(game, &mut last_bullet_move);
 
         utils::terminal::clear_terminal();
         game.print_format_board();

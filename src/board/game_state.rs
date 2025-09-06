@@ -44,12 +44,11 @@ impl GameState {
                     Cell::Empty  => print!("   "),
                     Cell::Alien  => print!("\x1b[37m~X~\x1b[0m"),
                     Cell::Player => print!("\x1b[37m<A>\x1b[0m"),
-                    Cell::Bullet => print!("\x1b[41m | \x1b[0m"),
+                    Cell::Bullet => print!("\x1b[37m | \x1b[0m"),
                     Cell::Border => print!("\x1b[100m   \x1b[0m"),
                 }
             }
             print!("\r\n");
         }
     }
-
 }
