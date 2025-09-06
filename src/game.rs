@@ -11,24 +11,21 @@ pub fn game_loop(game: &mut GameState) {
     game.print_format_board();
 
     let mut enemy_dir: i8 = 1;
-    let mut last_enemy_move = Instant::now();
-    let mut last_bullet_move = Instant::now();
-    let mut last_bullet_shooted = Instant::now();
 
     loop {
-        let end_game = player_controls(game, &mut last_bullet_shooted);
+        let end_game = player_controls(game);
 
         if end_game { break }
 
-        if last_enemy_move.elapsed() >= Duration::from_millis(600) {
+        if game.last_enemy_move.elapsed() >= Duration::from_millis(600) {
             let went_down = alien_movement(game, enemy_dir);
             if went_down {
                 enemy_dir *= -1;
             }
-            last_enemy_move = Instant::now();
+            game.last_enemy_move = Instant::now();
         }
 
-        manage_bullet_on_loop(game, &mut last_bullet_move);
+        manage_bullet_on_loop(game);
 
         utils::terminal::clear_terminal();
         game.print_format_board();

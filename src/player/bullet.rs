@@ -2,9 +2,13 @@ use std::time::{Duration, Instant};
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 
-pub fn shot_bullet(game: &mut GameState, last_bullet_shooted: &mut Instant) {
-    if !is_a_bullet_active(game) && last_bullet_shooted.elapsed() >= Duration::from_millis(500) {
-        *last_bullet_shooted = Instant::now();
+const BULLET_COOLDOWN: u64 = 500;
+const ERROR_NUMBER: usize = 999;
+
+
+pub fn shot_bullet(game: &mut GameState) {
+    if !is_a_bullet_active(game) && game.last_bullet_shooted.elapsed() >= Duration::from_millis(BULLET_COOLDOWN) {
+        game.last_bullet_shooted = Instant::now();
 
         if let Some(j_player_index) = game.board[HEIGHT -2].iter().position(|&c| c == Cell::Player) {
             game.board[HEIGHT-3][j_player_index] = Cell::Bullet;
@@ -12,14 +16,14 @@ pub fn shot_bullet(game: &mut GameState, last_bullet_shooted: &mut Instant) {
     }
 }
 
-pub fn manage_bullet_on_loop(game: &mut GameState, last_bullet_move: &mut Instant) {
+pub fn manage_bullet_on_loop(game: &mut GameState) {
     if is_a_bullet_active(game) {
-        if last_bullet_move.elapsed() >= Duration::from_millis(30) {
+        if game.last_bullet_move.elapsed() >= Duration::from_millis(30) {
             let (i_index, j_index) = get_bullet_coords(game);
 
-            *last_bullet_move = Instant::now();
+            game.last_bullet_move = Instant::now();
 
-            if i_index != 999 && j_index != 999 {
+            if i_index != ERROR_NUMBER && j_index != ERROR_NUMBER {
                 game.board[i_index][j_index] = Cell::Empty;
 
                 match game.board[i_index -1][j_index] {
@@ -56,5 +60,5 @@ fn get_bullet_coords(game: &GameState) -> (usize, usize) {
         }
     }
 
-    (999, 999)
+    (ERROR_NUMBER, ERROR_NUMBER)
 }

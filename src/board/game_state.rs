@@ -1,3 +1,4 @@
+use std::time::Instant;
 use crate::board::cell::Cell;
 
 pub const WIDTH: usize = 13;
@@ -6,12 +7,18 @@ pub const HEIGHT: usize = 20;
 
 pub struct GameState {
     pub board: [[Cell; WIDTH]; HEIGHT],
+    pub last_enemy_move: Instant,
+    pub last_bullet_move: Instant,
+    pub last_bullet_shooted: Instant,
 }
 
 impl GameState {
     pub fn new() -> Self {
         GameState {
             board: [[Cell::Empty; WIDTH]; HEIGHT],
+            last_enemy_move: Instant::now(),
+            last_bullet_move: Instant::now(),
+            last_bullet_shooted: Instant::now(),
         }
     }
 
