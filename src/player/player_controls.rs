@@ -14,7 +14,9 @@ pub fn player_controls(game: &mut GameState) -> bool {
                 KeyCode::Right => {
                     move_player_horizontally(game, 1);
                 }
-                KeyCode::Up => {}
+                KeyCode::Up => {
+                    shot_bullet(game);
+                }
                 KeyCode::Esc => {
                     return true;
                 }
@@ -39,4 +41,39 @@ fn move_player_horizontally(game: &mut GameState, direction: i8) {
             }
         }
     }
+}
+
+fn shot_bullet(game: &mut GameState) {
+    if !is_a_bullet_active(game){
+        if let Some(j_player_index) = game.board[HEIGHT -2].iter().position(|&c| c == Cell::Player) {
+            if game.board[HEIGHT-3][j_player_index] == Cell::Empty{
+                game.board[HEIGHT-3][j_player_index] = Cell::Bullet;
+            }
+        }
+    }
+}
+
+
+pub fn is_a_bullet_active(game: &GameState) -> bool {
+    for i in 0..HEIGHT {
+        for j in 0..WIDTH {
+            if game.board[i][j] == Cell::Bullet{
+                return true;
+            }
+        }
+    }
+
+    false
+}
+
+pub fn get_bullet_coords(game: &GameState) -> (usize, usize) {
+    for i in 0..HEIGHT {
+        for j in 0..WIDTH {
+            if game.board[i][j] == Cell::Bullet{
+                return (i , j);
+            } 
+        }
+    }
+    
+    (999, 999)
 }
