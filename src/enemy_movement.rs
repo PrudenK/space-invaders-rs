@@ -1,27 +1,9 @@
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 
-use std::{thread, time::Duration};
-use crate::movement;
-
-pub fn enemy_movement(board: &mut GameState) {
-    let mut direction: i8 = 1;
-
-    loop {
-        movement::clear_terminal();
-
-        let went_down = side_move(board, direction);
-
-        if went_down {
-            direction *= -1;
-        }
-
-        board.print_format_board();
-
-        thread::sleep(Duration::from_millis(300));
-    }
+pub fn enemy_movement(board: &mut GameState, direction: i8) -> bool {
+    side_move(board, direction)
 }
-
 
 fn side_move(board: &mut GameState, direction: i8) -> bool{
     let mut went_down = false;

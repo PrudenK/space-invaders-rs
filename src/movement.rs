@@ -1,43 +1,30 @@
 use crossterm::{event, execute, terminal::{Clear, ClearType}, cursor::MoveTo};
 use std::io::stdout;
+use std::time::Duration;
 use crossterm::event::{Event, KeyCode};
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 
-pub fn movement_loop(game: &mut GameState) {
-    clear_terminal();
-    game.print_format_board();
 
-    loop {
+pub fn movement_loop(game: &mut GameState) -> bool {
+    if event::poll(Duration::from_millis(1)).unwrap() {
         if let Event::Key(key_event) = event::read().unwrap() {
             match key_event.code {
                 KeyCode::Left => {
-                    clear_terminal();
-
-
                     side_move(game, -1);
-                    game.print_format_board();
                 }
                 KeyCode::Right => {
-                    clear_terminal();
-
-
                     side_move(game, 1);
-                    game.print_format_board();
                 }
-                KeyCode::Up => {
-
-                }
+                KeyCode::Up => {}
                 KeyCode::Esc => {
-                    println!("¡Juego terminado!\n");
-                    break
-                },
-                _ => {
-
+                    return true;
                 }
+                _ => {}
             }
         }
     }
+    false
 }
 
 pub fn clear_terminal(){

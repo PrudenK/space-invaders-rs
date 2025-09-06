@@ -4,6 +4,7 @@ use crossterm::terminal::{enable_raw_mode, disable_raw_mode};
 mod board;
 mod movement;
 mod enemy_movement;
+mod game;
 
 fn main() {
     enable_raw_mode().unwrap();
@@ -13,8 +14,7 @@ fn main() {
     game_state.set_up_new_game();
     game_state.print_format_board();
 
-    movement::movement_loop(&mut game_state);
-
+    game::game_loop(&mut game_state);
 
 
 
