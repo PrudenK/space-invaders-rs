@@ -33,9 +33,9 @@ pub fn game_loop(game: &mut GameState) {
         }else{
 
             if game.game_status == GameStatus::Loss{
-                println!("      Game Over!");
+                println!("      Game Over! (r for new game)");
             }else if game.game_status == GameStatus::Win{
-                println!("      You Win!");
+                println!("      You Win!  (r for new game)");
             }
 
             game.game_status = GameStatus::Waiting

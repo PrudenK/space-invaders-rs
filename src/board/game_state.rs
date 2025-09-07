@@ -5,7 +5,6 @@ use crate::game_result::result_condition::GameStatus;
 pub const WIDTH: usize = 13;
 pub const HEIGHT: usize = 20;
 
-
 pub struct GameState {
     pub board: [[Cell; WIDTH]; HEIGHT],
     pub last_enemy_move: Instant,
@@ -51,6 +50,17 @@ impl GameState {
         }
 
         self.board[HEIGHT-2][WIDTH/2] = Cell::Player;
+    }
+
+    pub fn restart_game(&mut self) {
+        self.set_up_new_game();
+        self.last_enemy_move = Instant::now();
+        self.last_bullet_move = Instant::now();
+        self.last_bullet_shooted = Instant::now();
+        self.last_alien_bullet_shooted = Instant::now();
+        self.last_alien_bullet_move = Instant::now();
+        self.game_status = GameStatus::Continue;
+        self.enemy_dir = 1;
     }
 
     pub fn print_format_board(&self) {

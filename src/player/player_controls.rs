@@ -19,6 +19,9 @@ pub fn player_controls(game: &mut GameState) -> bool {
                 KeyCode::Up => {
                     shot_bullet(game);
                 }
+                KeyCode::Char('r') | KeyCode::Char('R') => {
+                    game.restart_game()
+                }
                 KeyCode::Esc => {
                     return true;
                 }
