@@ -119,6 +119,14 @@ impl GameState {
                     Cell::Border => {
                         print!("\x1b[100m   \x1b[0m");
 
+                        if i == 3 && j == WIDTH -1{
+                            print!("  Developed by PrudenK");
+                        }
+
+                        if i == 4 && j == WIDTH -1{
+                            print!("  On Github: https://github.com/PrudenK/space-invaders-rs");
+                        }
+
                         if i == 5 && j == WIDTH -1{
                             print!("  Score : {}", self.score);
                         }
