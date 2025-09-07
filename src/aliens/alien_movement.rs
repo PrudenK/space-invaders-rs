@@ -44,7 +44,7 @@ fn last_alien_index_to_move(game: &GameState) -> usize {
         for j in 1..WIDTH{
             let cell = game.board[i][j];
 
-            if cell == Cell::Alien{
+            if matches!(cell, Cell::Alien(_)) {
                 if game.enemy_dir == 1{
                     if j > result{
                         result = j;
@@ -67,20 +67,24 @@ fn alien_side_move(game: &mut GameState, down: bool){
     for i in 1..HEIGHT{
         for j in 1..WIDTH{
             let cell = game.board[i][j];
-            if cell == Cell::Alien{
-                let i_move = if down { (i + 1) as u16 } else { i as u16 };
-                let j_move = if down { j as u16 } else { (j as isize + game.enemy_dir as isize) as u16 };
-                aliens_vector.push(AlienCoords::new(i_move, j_move));
-                game.board[i][j] = Cell::Empty;
+            if matches!(cell, Cell::Alien(_)) {
+                if let Cell::Alien(alien_type) = cell {
+                    let i_move = if down { (i + 1) as u16 } else { i as u16 };
+                    let j_move = if down { j as u16 } else { (j as isize + game.enemy_dir as isize) as u16 };
+
+                    aliens_vector.push(AlienCoords {
+                        x: i_move,
+                        y: j_move,
+                        alien_type,
+                    });
+
+                    game.board[i][j] = Cell::Empty;
+                }
             }
         }
     }
 
-    for i in 1..HEIGHT{
-        for j in 1..WIDTH{
-            if aliens_vector.contains(&AlienCoords::new(i as u16, j as u16)){
-                game.board[i][j] = Cell::Alien;
-            }
-        }
+    for alien in aliens_vector {
+        game.board[alien.x as usize][alien.y as usize] = Cell::Alien(alien.alien_type);
     }
 }

@@ -12,11 +12,11 @@ pub enum GameStatus{
 }
 
 pub fn calculate_game_status(game: &GameState) -> GameStatus {
-    if !is_cell_active(game, Cell::Alien) {
+    if !is_cell_active(game, |c| matches!(c, Cell::Alien(_))) {
         return GameStatus::Win;
     }
 
-    if !is_cell_active(game, Cell::Player) || has_alien_reached_player_row(game){
+    if !is_cell_active(game, |c| *c == Cell::Player) || has_alien_reached_player_row(game){
         return GameStatus::Loss;
     }
 

@@ -3,10 +3,10 @@ use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 
 pub const ERROR_NUMBER: usize = 999;
 
-pub fn is_cell_active(game: &GameState, cell_type: Cell) -> bool {
+pub fn is_cell_active<F>(game: &GameState, pred: F) -> bool where F: Fn(&Cell) -> bool,{
     for i in 0..HEIGHT {
         for j in 0..WIDTH {
-            if game.board[i][j] == cell_type {
+            if pred(&game.board[i][j]) {
                 return true;
             }
         }

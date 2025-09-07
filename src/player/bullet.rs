@@ -7,7 +7,7 @@ const BULLET_COOLDOWN: u64 = 500;
 
 
 pub fn shot_bullet(game: &mut GameState) {
-    if !is_cell_active(game, Cell::Bullet) && game.last_bullet_shooted.elapsed() >= Duration::from_millis(BULLET_COOLDOWN) {
+    if !is_cell_active(game, |c| *c == Cell::Bullet) && game.last_bullet_shooted.elapsed() >= Duration::from_millis(BULLET_COOLDOWN) {
         game.last_bullet_shooted = Instant::now();
 
         if let Some(j_player_index) = game.board[HEIGHT -2].iter().position(|&c| c == Cell::Player) {
@@ -17,7 +17,7 @@ pub fn shot_bullet(game: &mut GameState) {
 }
 
 pub fn manage_bullet_on_loop(game: &mut GameState) {
-    if is_cell_active(game, Cell::Bullet) {
+    if is_cell_active(game, |c| *c == Cell::Bullet) {
         if game.last_bullet_move.elapsed() >= Duration::from_millis(30) {
             let (i_index, j_index) = get_cell_coords(game, Cell::Bullet);
 
@@ -29,7 +29,7 @@ pub fn manage_bullet_on_loop(game: &mut GameState) {
 
                 match game.board[i_index -1][j_index] {
                     Cell::Border => {},
-                    Cell::Alien | Cell::AlienBullet => {
+                    Cell::Alien(_) | Cell::AlienBullet => {
                         game.board[i_index - 1][j_index] = Cell::Empty
                     },
                     _ => game.board[i_index - 1][j_index] = Cell::Bullet
