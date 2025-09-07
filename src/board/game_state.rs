@@ -3,8 +3,10 @@ use crate::aliens::alien_type::AlienType;
 use crate::board::cell::{Cell};
 use crate::game_result::result_condition::GameStatus;
 
-pub const WIDTH: usize = 16;
-pub const HEIGHT: usize = 24;
+pub const WIDTH: usize = 19;
+pub const HEIGHT: usize = 32;
+const TOP_BRIDGE_LIST: [u16; 9] = [3, 4, 5, 8, 9, 10, 13, 14, 15];
+const SIDE_BRIDGE_LIST: [u16; 6] = [3, 5, 8, 10, 13, 15];
 
 pub struct GameState {
     pub board: [[Cell; WIDTH]; HEIGHT],
@@ -50,13 +52,20 @@ impl GameState {
                         _ => AlienType::Row1,
                     };
 
-                    if j % 2 == 0 && j < 12 && j > 0{
+                    if j % 2 == 0 && j < 16 && j > 0{
                         self.board[i][j] = Cell::Alien(alien_type);
                     }else{
                         self.board[i][j] = Cell::Empty;
                     }
                 }else{
-                    self.board[i][j] = Cell::Empty;
+                    if i == HEIGHT - 5 {
+                        self.set_bridg_cell(i, j, &TOP_BRIDGE_LIST)
+                    }else if i == HEIGHT - 4{
+                        self.set_bridg_cell(i, j, &SIDE_BRIDGE_LIST)
+                    }else{
+                        self.board[i][j] = Cell::Empty;
+                    }
+
                 }
 
                 if i == 0 || j == 0 || i == HEIGHT -1 || j == WIDTH -1{
@@ -66,6 +75,14 @@ impl GameState {
         }
 
         self.board[HEIGHT-2][WIDTH/2] = Cell::Player;
+    }
+
+    fn set_bridg_cell(&mut self, i: usize, j: usize, bridge_list: &[u16]){
+        if bridge_list.contains(&(j as u16)){
+            self.board[i][j] = Cell::Bridge;
+        }else{
+            self.board[i][j] = Cell::Empty;
+        }
     }
 
     pub fn restart_game(&mut self) {
@@ -108,6 +125,8 @@ impl GameState {
                     Cell::Alien(AlienType::Row7) => print!("\x1b[93mqOp\x1b[0m"),
                     Cell::Alien(AlienType::Row8) => print!("\x1b[33m.&.\x1b[0m"),
                     Cell::Alien(AlienType::Row9) => print!("\x1b[95mwMw\x1b[0m"),
+
+                    Cell::Bridge => print!("\x1b[48;5;46m   \x1b[0m"),
                 }
             }
             print!("\r\n");

@@ -7,5 +7,6 @@ pub enum Cell {
     Alien(AlienType),
     Bullet,
     Border,
-    AlienBullet
+    AlienBullet,
+    Bridge
 }
