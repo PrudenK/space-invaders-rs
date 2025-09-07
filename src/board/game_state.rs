@@ -2,6 +2,7 @@ use std::time::Instant;
 use crate::aliens::alien_type::AlienType;
 use crate::board::cell::{Cell};
 use crate::game_result::result_condition::GameStatus;
+use crate::utils::constants::{DIR_RIGHT, PLAYER_LIVES};
 
 pub const WIDTH: usize = 19;
 pub const HEIGHT: usize = 32;
@@ -37,9 +38,9 @@ impl GameState {
             last_random_ovni_moved: Instant::now(),
             game_status: GameStatus::Continue,
             score: 0,
-            enemy_dir: 1,
-            random_ovni_dir: 1,
-            lives: 3
+            enemy_dir: DIR_RIGHT,
+            random_ovni_dir: DIR_RIGHT,
+            lives: PLAYER_LIVES
         }
     }
 
@@ -103,9 +104,9 @@ impl GameState {
         self.last_random_ovni_spawned = Instant::now();
         self.last_random_ovni_moved = Instant::now();
         self.game_status = GameStatus::Continue;
-        self.enemy_dir = 1;
+        self.enemy_dir = DIR_RIGHT;
         self.score = 0;
-        self.lives = 3
+        self.lives = PLAYER_LIVES
     }
 
     pub fn print_format_board(&self) {

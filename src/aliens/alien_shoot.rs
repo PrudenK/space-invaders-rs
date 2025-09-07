@@ -5,9 +5,8 @@ use crate::aliens::alien_coords::AlienData;
 use crate::aliens::alien_type::AlienType;
 use crate::board::cell::{Cell};
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
-use crate::utils::board_utils::{get_cell_coords, is_cell_active, ERROR_NUMBER};
-
-const ALIEN_BULLET_COOLDOWN: u64 = 600;
+use crate::utils::board_utils::{get_cell_coords, is_cell_active};
+use crate::utils::constants::{ALIEN_BULLET_COOLDOWN, DIR_DOWN, ERROR_NUMBER};
 
 pub fn make_alien_shoot(game: &mut GameState) {
     if !is_cell_active(game, |c| *c == Cell::AlienBullet) && game.last_alien_bullet_shooted.elapsed() >= Duration::from_millis(ALIEN_BULLET_COOLDOWN) {
@@ -29,19 +28,19 @@ pub fn manage_alien_bullet_on_loop(game: &mut GameState){
 
                 game.board[i_index][j_index] = Cell::Empty;
 
-                match game.board[i_index + 1][j_index] {
+                match game.board[i_index + DIR_DOWN][j_index] {
                     Cell::Border => {},
                     Cell::Bullet => {
-                        game.board[i_index + 1][j_index] = Cell::Empty
+                        game.board[i_index + DIR_DOWN][j_index] = Cell::Empty
                     },
                     Cell::Bridge(hp) if hp > 1 => {
-                        game.board[i_index + 1][j_index] = Cell::Bridge(hp - 1);
+                        game.board[i_index + DIR_DOWN][j_index] = Cell::Bridge(hp - 1);
                     }
                     Cell::Bridge(_) => {
-                        game.board[i_index + 1][j_index] = Cell::Empty;
+                        game.board[i_index + DIR_DOWN][j_index] = Cell::Empty;
                     }
                     Cell::Player => {
-                        game.board[i_index + 1][j_index] = Cell::Empty;
+                        game.board[i_index + DIR_DOWN][j_index] = Cell::Empty;
 
                         game.lives -= 1;
 
@@ -49,7 +48,7 @@ pub fn manage_alien_bullet_on_loop(game: &mut GameState){
                             game.board[HEIGHT-2][WIDTH/2] = Cell::Player;
                         }
                     }
-                    _ => game.board[i_index + 1][j_index] = Cell::AlienBullet
+                    _ => game.board[i_index + DIR_DOWN][j_index] = Cell::AlienBullet
                 }
             }
         }

@@ -8,6 +8,7 @@ use crate::game_result::result_condition::{calculate_game_status, GameStatus};
 use crate::player::bullet::manage_bullet_on_loop;
 use crate::player::player_controls::{player_controls};
 use crate::utils;
+use crate::utils::constants::WAIT_THREAD;
 
 pub fn game_loop(game: &mut GameState) {
     utils::terminal::clear_terminal();
@@ -46,6 +47,6 @@ pub fn game_loop(game: &mut GameState) {
             game.game_status = GameStatus::Waiting
         }
 
-        thread::sleep(Duration::from_millis(30));
+        thread::sleep(Duration::from_millis(WAIT_THREAD));
     }
 }
