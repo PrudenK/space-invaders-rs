@@ -84,7 +84,12 @@ impl GameState {
                     Cell::Player => print!("\x1b[37m<A>\x1b[0m"),
                     Cell::Bullet => print!("\x1b[37m | \x1b[0m"),
                     Cell::AlienBullet => print!("\x1b[31m | \x1b[0m"),
-                    Cell::Border => print!("\x1b[100m   \x1b[0m"),
+                    Cell::Border => {
+                        print!("\x1b[100m   \x1b[0m");
+                        if i == 8 && j == WIDTH -1{
+                            print!("Score : ");
+                        }
+                    },
 
                     Cell::Alien(AlienType::Row1) => print!("\x1b[32m~X~\x1b[0m"),
                     Cell::Alien(AlienType::Row2) => print!("\x1b[94m-$-\x1b[0m"),
