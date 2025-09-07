@@ -1,5 +1,6 @@
 use std::time::Instant;
-use crate::board::cell::{AlienType, Cell};
+use crate::aliens::alien_type::AlienType;
+use crate::board::cell::{Cell};
 use crate::game_result::result_condition::GameStatus;
 
 pub const WIDTH: usize = 16;
@@ -35,8 +36,8 @@ impl GameState {
     pub fn set_up_new_game(self: &mut GameState) {
         for i in 0..HEIGHT {
             for j in 0..WIDTH {
-                if i > 0 && i < 10{
-                    let alien_type = match i {
+                if i > 1 && i < 12{
+                    let alien_type = match i - 1 {
                         1 => AlienType::Row1,
                         2 => AlienType::Row2,
                         3 => AlienType::Row3,

@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
 use rand::{Rng};
-use crate::aliens::alien_coords::AlienCoords;
-use crate::board::cell::{AlienType, Cell};
+use crate::aliens::alien_coords::AlienData;
+use crate::aliens::alien_type::AlienType;
+use crate::board::cell::{Cell};
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 use crate::utils::board_utils::{get_cell_coords, is_cell_active, ERROR_NUMBER};
 
@@ -40,10 +41,10 @@ pub fn manage_alien_bullet_on_loop(game: &mut GameState){
     }
 }
 
-fn calculate_alien_will_shot(game: &GameState) -> Option<AlienCoords> {
+fn calculate_alien_will_shot(game: &GameState) -> Option<AlienData> {
     let mut rng = rand::thread_rng();
 
-    let bottom_aliens:Vec<AlienCoords> = get_bottom_aliens_coords(game);
+    let bottom_aliens:Vec<AlienData> = get_bottom_aliens_coords(game);
     let bottom_aliens_len = bottom_aliens.len();
 
     let index_shoot = rng.gen_range(0..bottom_aliens_len + 1);
@@ -53,14 +54,14 @@ fn calculate_alien_will_shot(game: &GameState) -> Option<AlienCoords> {
 
 
 
-pub fn get_bottom_aliens_coords(game: &GameState) -> Vec<AlienCoords> {
-    let mut bottom_by_col: HashMap<u16, AlienCoords> = HashMap::new();
+pub fn get_bottom_aliens_coords(game: &GameState) -> Vec<AlienData> {
+    let mut bottom_by_col: HashMap<u16, AlienData> = HashMap::new();
 
     for i in 1..HEIGHT{
         for j in 1..WIDTH{
             let cell = game.board[i][j];
             if matches!(cell, Cell::Alien(_)) {
-                let coord = AlienCoords::new(i as u16, j as u16, AlienType::Row1);
+                let coord = AlienData::new(i as u16, j as u16, AlienType::Row1);
 
                 bottom_by_col
                     .entry(j as u16)
