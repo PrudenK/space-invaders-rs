@@ -97,7 +97,7 @@ impl GameState {
                     Cell::Alien(AlienType::Row9) => print!("\x1b[95m X \x1b[0m"),
                 }
             }
-            println!();
+            print!("\r\n");
         }
     }
 }
