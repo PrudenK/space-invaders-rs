@@ -6,6 +6,7 @@ mod game;
 mod utils;
 mod aliens;
 mod player;
+mod game_result;
 
 fn main() {
     enable_raw_mode().unwrap();

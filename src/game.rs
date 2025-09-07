@@ -3,6 +3,7 @@ use std::time::{Duration};
 use crate::board::game_state::GameState;
 use crate::aliens::alien_movement::{alien_move_loop};
 use crate::aliens::alien_shoot::{make_alien_shoot, manage_alien_bullet_on_loop};
+use crate::game_result::result_condition::{calculate_game_status, GameStatus};
 use crate::player::bullet::manage_bullet_on_loop;
 use crate::player::player_controls::{player_controls};
 use crate::utils;
@@ -16,16 +17,29 @@ pub fn game_loop(game: &mut GameState) {
 
         if end_game { break }
 
-        alien_move_loop(game);
+        if game.game_status == GameStatus::Continue{
+            alien_move_loop(game);
 
-        manage_bullet_on_loop(game);
+            manage_bullet_on_loop(game);
 
-        make_alien_shoot(game);
+            make_alien_shoot(game);
 
-        manage_alien_bullet_on_loop(game);
+            manage_alien_bullet_on_loop(game);
 
-        utils::terminal::clear_terminal();
-        game.print_format_board();
+            utils::terminal::clear_terminal();
+            game.print_format_board();
+
+            game.game_status = calculate_game_status(game);
+        }else{
+
+            if game.game_status == GameStatus::Loss{
+                println!("      Game Over!");
+            }else if game.game_status == GameStatus::Win{
+                println!("      You Win!");
+            }
+
+            game.game_status = GameStatus::Waiting
+        }
 
         thread::sleep(Duration::from_millis(30));
     }

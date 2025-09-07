@@ -5,7 +5,7 @@ use crate::board::game_state::{GameState};
 use crate::player::bullet::shot_bullet;
 use crate::player::movements::move_player_horizontally;
 
-pub fn player_controls(game: &mut GameState, ) -> bool {
+pub fn player_controls(game: &mut GameState) -> bool {
 
     if event::poll(Duration::from_millis(1)).unwrap() {
         if let Event::Key(key_event) = event::read().unwrap() {

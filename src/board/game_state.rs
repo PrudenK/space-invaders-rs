@@ -1,5 +1,6 @@
 use std::time::Instant;
 use crate::board::cell::Cell;
+use crate::game_result::result_condition::GameStatus;
 
 pub const WIDTH: usize = 13;
 pub const HEIGHT: usize = 20;
@@ -12,6 +13,7 @@ pub struct GameState {
     pub last_bullet_shooted: Instant,
     pub last_alien_bullet_shooted: Instant,
     pub last_alien_bullet_move: Instant,
+    pub game_status: GameStatus,
     pub enemy_dir: i8
 }
 
@@ -24,6 +26,7 @@ impl GameState {
             last_bullet_shooted: Instant::now(),
             last_alien_bullet_shooted: Instant::now(),
             last_alien_bullet_move: Instant::now(),
+            game_status: GameStatus::Continue,
             enemy_dir: 1
         }
     }

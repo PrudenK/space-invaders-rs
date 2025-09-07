@@ -28,7 +28,7 @@ pub fn manage_alien_bullet_on_loop(game: &mut GameState){
 
                 game.board[i_index][j_index] = Cell::Empty;
 
-                match game.board[i_index + 1][j_index] {  // TODO impactar al jugador
+                match game.board[i_index + 1][j_index] {
                     Cell::Border => {},
                     Cell::Bullet => {
                         game.board[i_index + 1][j_index] = Cell::Empty
@@ -55,7 +55,7 @@ fn calculate_alien_will_shot(game: &GameState) -> Option<AlienCoords> {
 
 
 
-fn get_bottom_aliens_coords(game: &GameState) -> Vec<AlienCoords> {
+pub fn get_bottom_aliens_coords(game: &GameState) -> Vec<AlienCoords> {
     let mut bottom_by_col: HashMap<u16, AlienCoords> = HashMap::new();
 
     for i in 1..HEIGHT{
