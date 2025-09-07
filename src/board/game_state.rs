@@ -92,9 +92,9 @@ impl GameState {
                     Cell::Alien(AlienType::Row4) => print!("\x1b[35mzZz\x1b[0m"),
                     Cell::Alien(AlienType::Row5) => print!("\x1b[36m~^~\x1b[0m"),
                     Cell::Alien(AlienType::Row6) => print!("\x1b[92m-@-\x1b[0m"),
-                    Cell::Alien(AlienType::Row7) => print!("\x1b[93m X \x1b[0m"),
-                    Cell::Alien(AlienType::Row8) => print!("\x1b[94m X \x1b[0m"),
-                    Cell::Alien(AlienType::Row9) => print!("\x1b[95m X \x1b[0m"),
+                    Cell::Alien(AlienType::Row7) => print!("\x1b[93mqOp\x1b[0m"),
+                    Cell::Alien(AlienType::Row8) => print!("\x1b[94m.&.\x1b[0m"),
+                    Cell::Alien(AlienType::Row9) => print!("\x1b[95mwMw\x1b[0m"),
                 }
             }
             print!("\r\n");
