@@ -16,7 +16,7 @@ pub fn calculate_game_status(game: &GameState) -> GameStatus {
         return GameStatus::Win;
     }
 
-    if !is_cell_active(game, |c| *c == Cell::Player) || has_alien_reached_player_row(game){
+    if game.lives == 0 || has_alien_reached_player_row(game){
         return GameStatus::Loss;
     }
 

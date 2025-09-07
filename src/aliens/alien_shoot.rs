@@ -40,6 +40,15 @@ pub fn manage_alien_bullet_on_loop(game: &mut GameState){
                     Cell::Bridge(_) => {
                         game.board[i_index + 1][j_index] = Cell::Empty;
                     }
+                    Cell::Player => {
+                        game.board[i_index + 1][j_index] = Cell::Empty;
+
+                        game.lives -= 1;
+
+                        if game.lives > 0{
+                            game.board[HEIGHT-2][WIDTH/2] = Cell::Player;
+                        }
+                    }
                     _ => game.board[i_index + 1][j_index] = Cell::AlienBullet
                 }
             }

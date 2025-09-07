@@ -20,7 +20,8 @@ pub struct GameState {
     pub game_status: GameStatus,
     pub score: i32,
     pub enemy_dir: i8,
-    pub random_ovni_dir: i8
+    pub random_ovni_dir: i8,
+    pub lives: u8,
 }
 
 impl GameState {
@@ -37,7 +38,8 @@ impl GameState {
             game_status: GameStatus::Continue,
             score: 0,
             enemy_dir: 1,
-            random_ovni_dir: 1
+            random_ovni_dir: 1,
+            lives: 3
         }
     }
 
@@ -103,6 +105,7 @@ impl GameState {
         self.game_status = GameStatus::Continue;
         self.enemy_dir = 1;
         self.score = 0;
+        self.lives = 3
     }
 
     pub fn print_format_board(&self) {
@@ -121,6 +124,13 @@ impl GameState {
                         }
 
                         if i == 7 && j == WIDTH -1{
+                            print!("  Lives:");
+                            for _ in 0..self.lives {
+                                print!("\x1b[37m ♥ \x1b[0m");
+                            }
+                        }
+
+                        if i == 9 && j == WIDTH -1{
                             print!("  Press r for new game");
                         }
                     },
@@ -142,7 +152,7 @@ impl GameState {
                         0 => print!("\x1b[48;5;196m   \x1b[0m"),
                         _ => print!("   "),
                     },
-                    
+
                     Cell::RandomOvni => print!("\x1b[41m[O]\x1b[0m"),
                 }
             }
