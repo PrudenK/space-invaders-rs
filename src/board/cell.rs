@@ -8,5 +8,5 @@ pub enum Cell {
     Bullet,
     Border,
     AlienBullet,
-    Bridge
+    Bridge(u8)
 }

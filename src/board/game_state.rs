@@ -79,7 +79,7 @@ impl GameState {
 
     fn set_bridg_cell(&mut self, i: usize, j: usize, bridge_list: &[u16]){
         if bridge_list.contains(&(j as u16)){
-            self.board[i][j] = Cell::Bridge;
+            self.board[i][j] = Cell::Bridge(4);
         }else{
             self.board[i][j] = Cell::Empty;
         }
@@ -126,7 +126,14 @@ impl GameState {
                     Cell::Alien(AlienType::Row8) => print!("\x1b[33m.&.\x1b[0m"),
                     Cell::Alien(AlienType::Row9) => print!("\x1b[95mwMw\x1b[0m"),
 
-                    Cell::Bridge => print!("\x1b[48;5;46m   \x1b[0m"),
+                    Cell::Bridge(hp) => match hp {
+                        4 => print!("\x1b[48;5;46m   \x1b[0m"),
+                        3 => print!("\x1b[48;5;118m   \x1b[0m"),
+                        2 => print!("\x1b[48;5;190m   \x1b[0m"),
+                        1 => print!("\x1b[48;5;208m   \x1b[0m"),
+                        0 => print!("\x1b[48;5;196m   \x1b[0m"),
+                        _ => print!("   "),
+                    },
                 }
             }
             print!("\r\n");
