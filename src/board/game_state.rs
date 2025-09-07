@@ -46,7 +46,7 @@ impl GameState {
     pub fn set_up_new_game(self: &mut GameState) {
         for i in 0..HEIGHT {
             for j in 0..WIDTH {
-                if i > 1 && i < 12{
+                if i > 1 && i < 11{
                     let alien_type = match i - 1 {
                         1 => AlienType::Row1,
                         2 => AlienType::Row2,
@@ -113,7 +113,7 @@ impl GameState {
             for j in 0..WIDTH {
                 match self.board[i][j] {
                     Cell::Empty => print!("   "),
-                    Cell::Player => print!("\x1b[37m<A>\x1b[0m"),
+                    Cell::Player => print!("\x1b[37m<Â>\x1b[0m"),
                     Cell::Bullet => print!("\x1b[37m | \x1b[0m"),
                     Cell::AlienBullet => print!("\x1b[31m | \x1b[0m"),
                     Cell::Border => {
@@ -132,6 +132,10 @@ impl GameState {
 
                         if i == 9 && j == WIDTH -1{
                             print!("  Press r for new game");
+                        }
+
+                        if i == 11 && j == WIDTH -1{
+                            print!("  Press Esc to exit");
                         }
                     },
                     Cell::Alien(AlienType::Row1) => print!("\x1b[32m~X~\x1b[0m"),
