@@ -7,3 +7,7 @@ pub enum Cell {
     Border,
     AlienBullet
 }
+
+pub enum AlienType{
+    
+}
