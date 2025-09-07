@@ -1,3 +1,4 @@
+use std::thread::scope;
 use std::time::{Duration, Instant};
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
@@ -95,6 +96,7 @@ fn alien_side_move(game: &mut GameState, down: bool){
             }else{
                 let (i_index, j_index) = get_cell_coords(game, Cell::Bullet);
                 game.board[i_index][j_index] = Cell::Empty;
+                game.score += alien.alien_type.score()
             }
         }
     }
