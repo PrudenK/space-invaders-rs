@@ -1,40 +1,51 @@
+use std::time::{Duration, Instant};
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 use crate::aliens::alien_coords::AlienCoords;
 
 
-pub fn alien_movement(board: &mut GameState, direction: i8) -> bool{
-    let mut went_down = false;
-    let index_to_move = last_alien_index_to_move(board, direction);
+pub fn alien_move_loop(game: &mut GameState) {
+    if game.last_enemy_move.elapsed() >= Duration::from_millis(600) {
+        let went_down = alien_movement(game);
+        if went_down {
+            game.enemy_dir *= -1;
+        }
+        game.last_enemy_move = Instant::now();
+    }
+}
 
-    if direction == 1{
+fn alien_movement(game: &mut GameState) -> bool{
+    let mut went_down = false;
+    let index_to_move = last_alien_index_to_move(game);
+
+    if game.enemy_dir == 1{
         if index_to_move == WIDTH -2{
-            alien_side_move(board, 1, true);
+            alien_side_move(game, true);
             went_down = true;
         }else{
-            alien_side_move(board, 1, false);
+            alien_side_move(game, false);
         }
     }else{
         if index_to_move == 1{
-            alien_side_move(board, -1, true);
+            alien_side_move(game,true);
             went_down = true;
         }else{
-            alien_side_move(board, -1, false);
+            alien_side_move(game, false);
         }
     }
 
     went_down
 }
 
-fn last_alien_index_to_move(board: &GameState, direction: i8) -> usize {
-    let mut result = if direction == 1 { 0 } else { WIDTH -1 };
+fn last_alien_index_to_move(game: &GameState) -> usize {
+    let mut result = if game.enemy_dir == 1 { 0 } else { WIDTH -1 };
 
     for i in 1..HEIGHT{
         for j in 1..WIDTH{
-            let cell = board.board[i][j];
+            let cell = game.board[i][j];
 
             if cell == Cell::Alien{
-                if direction == 1{
+                if game.enemy_dir == 1{
                     if j > result{
                         result = j;
                     }
@@ -50,17 +61,17 @@ fn last_alien_index_to_move(board: &GameState, direction: i8) -> usize {
     result
 }
 
-fn alien_side_move(board: &mut GameState, direction: isize, down: bool){
+fn alien_side_move(game: &mut GameState, down: bool){
     let mut aliens_vector: Vec<AlienCoords> = Vec::new();
 
     for i in 1..HEIGHT{
         for j in 1..WIDTH{
-            let cell = board.board[i][j];
+            let cell = game.board[i][j];
             if cell == Cell::Alien{
                 let i_move = if down { (i + 1) as u16 } else { i as u16 };
-                let j_move = if down { j as u16 } else { (j as isize + direction) as u16 };
+                let j_move = if down { j as u16 } else { (j as isize + game.enemy_dir as isize) as u16 };
                 aliens_vector.push(AlienCoords::new(i_move, j_move));
-                board.board[i][j] = Cell::Empty;
+                game.board[i][j] = Cell::Empty;
             }
         }
     }
@@ -68,7 +79,7 @@ fn alien_side_move(board: &mut GameState, direction: isize, down: bool){
     for i in 1..HEIGHT{
         for j in 1..WIDTH{
             if aliens_vector.contains(&AlienCoords::new(i as u16, j as u16)){
-                board.board[i][j] = Cell::Alien;
+                game.board[i][j] = Cell::Alien;
             }
         }
     }

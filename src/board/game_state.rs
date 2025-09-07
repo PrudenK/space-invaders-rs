@@ -10,6 +10,7 @@ pub struct GameState {
     pub last_enemy_move: Instant,
     pub last_bullet_move: Instant,
     pub last_bullet_shooted: Instant,
+    pub enemy_dir: i8
 }
 
 impl GameState {
@@ -19,6 +20,7 @@ impl GameState {
             last_enemy_move: Instant::now(),
             last_bullet_move: Instant::now(),
             last_bullet_shooted: Instant::now(),
+            enemy_dir: 1
         }
     }
 
