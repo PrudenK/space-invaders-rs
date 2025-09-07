@@ -10,6 +10,8 @@ pub struct GameState {
     pub last_enemy_move: Instant,
     pub last_bullet_move: Instant,
     pub last_bullet_shooted: Instant,
+    pub last_alien_bullet_shooted: Instant,
+    pub last_alien_bullet_move: Instant,
     pub enemy_dir: i8
 }
 
@@ -20,6 +22,8 @@ impl GameState {
             last_enemy_move: Instant::now(),
             last_bullet_move: Instant::now(),
             last_bullet_shooted: Instant::now(),
+            last_alien_bullet_shooted: Instant::now(),
+            last_alien_bullet_move: Instant::now(),
             enemy_dir: 1
         }
     }
@@ -54,6 +58,7 @@ impl GameState {
                     Cell::Alien  => print!("\x1b[37m~X~\x1b[0m"),
                     Cell::Player => print!("\x1b[37m<A>\x1b[0m"),
                     Cell::Bullet => print!("\x1b[37m | \x1b[0m"),
+                    Cell::AlienBullet => print!("\x1b[31m | \x1b[0m"),
                     Cell::Border => print!("\x1b[100m   \x1b[0m"),
                 }
             }

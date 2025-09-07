@@ -1,7 +1,7 @@
 #[derive(PartialEq, Copy, Clone, Debug)]
 pub struct AlienCoords {
-    x: u16,
-    y: u16
+    pub x: u16,
+    pub y: u16
 }
 
 impl AlienCoords{

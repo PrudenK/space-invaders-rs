@@ -1,5 +1,5 @@
 use crossterm::{event};
-use std::time::{Duration, Instant};
+use std::time::{Duration};
 use crossterm::event::{Event, KeyCode};
 use crate::board::game_state::{GameState};
 use crate::player::bullet::shot_bullet;

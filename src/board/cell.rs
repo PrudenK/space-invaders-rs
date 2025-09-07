@@ -4,5 +4,6 @@ pub enum Cell {
     Player,
     Alien,
     Bullet,
-    Border
+    Border,
+    AlienBullet
 }
