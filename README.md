@@ -38,5 +38,5 @@ Este es mi primer proyecto en Rust, es una réplica del mítico `Space Invaders`
 
 
 <div align="center">
-  <img src="assets/gameplay.gif" width="900"/>
+  <img src="assets/gameplayy.gif" width="900"/>
 </div>
