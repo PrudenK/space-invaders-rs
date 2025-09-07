@@ -38,6 +38,9 @@ pub fn manage_bullet_on_loop(game: &mut GameState) {
                     Cell::AlienBullet => {
                         game.board[i_index - 1][j_index] = Cell::Empty;
                     },
+                    Cell::Bridge => {
+                        game.board[i_index - 1][j_index] = Cell::Empty
+                    }
                     _ => game.board[i_index - 1][j_index] = Cell::Bullet
                 }
             }
