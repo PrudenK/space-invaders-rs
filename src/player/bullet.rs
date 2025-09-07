@@ -21,7 +21,6 @@ pub fn manage_bullet_on_loop(game: &mut GameState) {
         if game.last_bullet_move.elapsed() >= Duration::from_millis(30) {
             let (i_index, j_index) = get_cell_coords(game, Cell::Bullet);
 
-
             if i_index != ERROR_NUMBER && j_index != ERROR_NUMBER {
                 game.last_bullet_move = Instant::now();
 
@@ -31,6 +30,10 @@ pub fn manage_bullet_on_loop(game: &mut GameState) {
                     Cell::Border => {
                         game.score -= 20;
                     },
+                    Cell::RandomOvni => {
+                        game.score += 1500;
+                        game.board[i_index - 1][j_index] = Cell::Empty;
+                    }
                     Cell::Alien(alien_type) => {
                         game.score += alien_type.score();
                         game.board[i_index - 1][j_index] = Cell::Empty;

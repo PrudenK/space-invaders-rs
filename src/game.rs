@@ -3,6 +3,7 @@ use std::time::{Duration};
 use crate::board::game_state::GameState;
 use crate::aliens::alien_movement::{alien_move_loop};
 use crate::aliens::alien_shoot::{make_alien_shoot, manage_alien_bullet_on_loop};
+use crate::aliens::random_ovni::{manage_random_ovni_on_loop, spwan_random_ovni};
 use crate::game_result::result_condition::{calculate_game_status, GameStatus};
 use crate::player::bullet::manage_bullet_on_loop;
 use crate::player::player_controls::{player_controls};
@@ -23,8 +24,12 @@ pub fn game_loop(game: &mut GameState) {
             manage_bullet_on_loop(game);
 
             make_alien_shoot(game);
-
+            
             manage_alien_bullet_on_loop(game);
+
+            spwan_random_ovni(game);
+            
+            manage_random_ovni_on_loop(game);
 
             utils::terminal::clear_terminal();
             game.print_format_board();

@@ -15,9 +15,12 @@ pub struct GameState {
     pub last_bullet_shooted: Instant,
     pub last_alien_bullet_shooted: Instant,
     pub last_alien_bullet_move: Instant,
+    pub last_random_ovni_spawned: Instant,
+    pub last_random_ovni_moved: Instant,
     pub game_status: GameStatus,
     pub score: i32,
-    pub enemy_dir: i8
+    pub enemy_dir: i8,
+    pub random_ovni_dir: i8
 }
 
 impl GameState {
@@ -29,9 +32,12 @@ impl GameState {
             last_bullet_shooted: Instant::now(),
             last_alien_bullet_shooted: Instant::now(),
             last_alien_bullet_move: Instant::now(),
+            last_random_ovni_spawned: Instant::now(),
+            last_random_ovni_moved: Instant::now(),
             game_status: GameStatus::Continue,
             score: 0,
-            enemy_dir: 1
+            enemy_dir: 1,
+            random_ovni_dir: 1
         }
     }
 
@@ -92,6 +98,8 @@ impl GameState {
         self.last_bullet_shooted = Instant::now();
         self.last_alien_bullet_shooted = Instant::now();
         self.last_alien_bullet_move = Instant::now();
+        self.last_random_ovni_spawned = Instant::now();
+        self.last_random_ovni_moved = Instant::now();
         self.game_status = GameStatus::Continue;
         self.enemy_dir = 1;
         self.score = 0;
@@ -134,6 +142,8 @@ impl GameState {
                         0 => print!("\x1b[48;5;196m   \x1b[0m"),
                         _ => print!("   "),
                     },
+                    
+                    Cell::RandomOvni => print!("\x1b[41m[O]\x1b[0m"),
                 }
             }
             print!("\r\n");

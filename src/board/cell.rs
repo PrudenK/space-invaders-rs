@@ -8,5 +8,6 @@ pub enum Cell {
     Bullet,
     Border,
     AlienBullet,
+    RandomOvni,
     Bridge(u8)
 }
