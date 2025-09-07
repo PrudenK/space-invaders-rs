@@ -127,22 +127,22 @@ impl GameState {
                             print!("  On Github: https://github.com/PrudenK/space-invaders-rs");
                         }
 
-                        if i == 5 && j == WIDTH -1{
+                        if i == 6 && j == WIDTH -1{
                             print!("  Score : {}", self.score);
                         }
 
-                        if i == 7 && j == WIDTH -1{
+                        if i == 8 && j == WIDTH -1{
                             print!("  Lives:");
                             for _ in 0..self.lives {
                                 print!("\x1b[37m ♥ \x1b[0m");
                             }
                         }
 
-                        if i == 9 && j == WIDTH -1{
+                        if i == 10 && j == WIDTH -1{
                             print!("  Press r for new game");
                         }
 
-                        if i == 11 && j == WIDTH -1{
+                        if i == 12 && j == WIDTH -1{
                             print!("  Press Esc to exit");
                         }
                     },

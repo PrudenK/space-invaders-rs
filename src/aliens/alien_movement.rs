@@ -2,10 +2,10 @@ use std::time::{Duration, Instant};
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 use crate::aliens::alien_coords::AlienData;
-
+use crate::game_result::result_condition::GameStatus;
 
 pub fn alien_move_loop(game: &mut GameState) {
-    if game.last_enemy_move.elapsed() >= Duration::from_millis(600) {
+    if game.last_enemy_move.elapsed() >= Duration::from_millis(50) {
         let went_down = alien_movement(game);
         if went_down {
             game.enemy_dir *= -1;
@@ -85,6 +85,10 @@ fn alien_side_move(game: &mut GameState, down: bool){
     }
 
     for alien in aliens_vector {
-        game.board[alien.x as usize][alien.y as usize] = Cell::Alien(alien.alien_type);
+        if game.board[alien.x as usize][alien.y as usize] == Cell::Player{
+            game.game_status = GameStatus::Loss;
+        }else{
+            game.board[alien.x as usize][alien.y as usize] = Cell::Alien(alien.alien_type);
+        }
     }
 }
