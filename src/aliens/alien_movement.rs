@@ -3,6 +3,7 @@ use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};
 use crate::aliens::alien_coords::AlienData;
 use crate::game_result::result_condition::GameStatus;
+use crate::utils::board_utils::get_cell_coords;
 use crate::utils::constants::{ALIEN_SPEED, DIR_DOWN, DIR_RIGHT};
 
 pub fn alien_move_loop(game: &mut GameState) {
@@ -89,7 +90,12 @@ fn alien_side_move(game: &mut GameState, down: bool){
         if game.board[alien.x as usize][alien.y as usize] == Cell::Player{
             game.game_status = GameStatus::Loss;
         }else{
-            game.board[alien.x as usize][alien.y as usize] = Cell::Alien(alien.alien_type);
+            if game.board[alien.x as usize][alien.y as usize] != Cell::Bullet{
+                game.board[alien.x as usize][alien.y as usize] = Cell::Alien(alien.alien_type);
+            }else{
+                let (i_index, j_index) = get_cell_coords(game, Cell::Bullet);
+                game.board[i_index][j_index] = Cell::Empty;
+            }
         }
     }
 }
