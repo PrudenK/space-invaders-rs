@@ -1,4 +1,3 @@
-use std::thread::scope;
 use std::time::{Duration, Instant};
 use crate::board::cell::Cell;
 use crate::board::game_state::{GameState, HEIGHT, WIDTH};

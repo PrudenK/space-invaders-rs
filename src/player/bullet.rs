@@ -1,6 +1,6 @@
 use std::time::{Duration, Instant};
 use crate::board::cell::Cell;
-use crate::board::game_state::{GameState, HEIGHT, WIDTH};
+use crate::board::game_state::{GameState, HEIGHT};
 use crate::utils::board_utils::{get_cell_coords, is_cell_active};
 use crate::utils::constants::{BULLET_COOLDOWN, BULLET_SPEED, DIR_LEFT, ERROR_NUMBER, MISSING_BULET_SCORE, OVNI_SCORE_VALUE};
 
