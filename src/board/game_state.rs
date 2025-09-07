@@ -2,8 +2,8 @@ use std::time::Instant;
 use crate::board::cell::{AlienType, Cell};
 use crate::game_result::result_condition::GameStatus;
 
-pub const WIDTH: usize = 13;
-pub const HEIGHT: usize = 20;
+pub const WIDTH: usize = 16;
+pub const HEIGHT: usize = 24;
 
 pub struct GameState {
     pub board: [[Cell; WIDTH]; HEIGHT],
@@ -13,6 +13,7 @@ pub struct GameState {
     pub last_alien_bullet_shooted: Instant,
     pub last_alien_bullet_move: Instant,
     pub game_status: GameStatus,
+    pub score: i32,
     pub enemy_dir: i8
 }
 
@@ -26,6 +27,7 @@ impl GameState {
             last_alien_bullet_shooted: Instant::now(),
             last_alien_bullet_move: Instant::now(),
             game_status: GameStatus::Continue,
+            score: 0,
             enemy_dir: 1
         }
     }
@@ -47,7 +49,7 @@ impl GameState {
                         _ => AlienType::Row1,
                     };
 
-                    if j % 2 == 0 && j < 10 && j > 0{
+                    if j % 2 == 0 && j < 12 && j > 0{
                         self.board[i][j] = Cell::Alien(alien_type);
                     }else{
                         self.board[i][j] = Cell::Empty;
@@ -74,6 +76,7 @@ impl GameState {
         self.last_alien_bullet_move = Instant::now();
         self.game_status = GameStatus::Continue;
         self.enemy_dir = 1;
+        self.score = 0;
     }
 
     pub fn print_format_board(&self) {
@@ -86,11 +89,15 @@ impl GameState {
                     Cell::AlienBullet => print!("\x1b[31m | \x1b[0m"),
                     Cell::Border => {
                         print!("\x1b[100m   \x1b[0m");
-                        if i == 8 && j == WIDTH -1{
-                            print!("Score : ");
+
+                        if i == 5 && j == WIDTH -1{
+                            print!("  Score : {}", self.score);
+                        }
+
+                        if i == 7 && j == WIDTH -1{
+                            print!("  Press r for new game");
                         }
                     },
-
                     Cell::Alien(AlienType::Row1) => print!("\x1b[32m~X~\x1b[0m"),
                     Cell::Alien(AlienType::Row2) => print!("\x1b[94m-$-\x1b[0m"),
                     Cell::Alien(AlienType::Row3) => print!("\x1b[34mx0x\x1b[0m"),

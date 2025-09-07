@@ -28,9 +28,15 @@ pub fn manage_bullet_on_loop(game: &mut GameState) {
                 game.board[i_index][j_index] = Cell::Empty;
 
                 match game.board[i_index -1][j_index] {
-                    Cell::Border => {},
-                    Cell::Alien(_) | Cell::AlienBullet => {
-                        game.board[i_index - 1][j_index] = Cell::Empty
+                    Cell::Border => {
+                        game.score -= 20;
+                    },
+                    Cell::Alien(alien_type) => {
+                        game.score += alien_type.score();
+                        game.board[i_index - 1][j_index] = Cell::Empty;
+                    }
+                    Cell::AlienBullet => {
+                        game.board[i_index - 1][j_index] = Cell::Empty;
                     },
                     _ => game.board[i_index - 1][j_index] = Cell::Bullet
                 }
