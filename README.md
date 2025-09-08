@@ -1,5 +1,7 @@
 # Space Invaders en Rust 🦀
 
+[![wakatime](https://wakatime.com/badge/user/72f82c75-11de-43fd-979a-a5efbf06f882/project/cc46f16d-0430-4e87-97c1-cdb960672546.svg)](https://wakatime.com/badge/user/72f82c75-11de-43fd-979a-a5efbf06f882/project/cc46f16d-0430-4e87-97c1-cdb960672546)
+
 Este es mi primer proyecto en Rust, es una réplica del mítico `Space Invaders` en `Rust` para el terminal en Linux.
 
 ### Mecánicas que incluye:
