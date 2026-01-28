@@ -38,7 +38,7 @@ Este es mi primer proyecto en Rust, es una réplica del mítico `Space Invaders`
 
 #### 4. ▶️ Ejecuta el juego
 
-    ./target/release/space-invaders-rs
+    ./target/release/space_invaders_rust
 
 ---
 
