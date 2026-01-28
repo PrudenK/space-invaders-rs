@@ -1,1 +1,11 @@
-/target
+# Rust
+/target/
+Cargo.lock
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
