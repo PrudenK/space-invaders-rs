@@ -13,28 +13,34 @@ Este es mi primer proyecto en Rust, es una réplica del mítico `Space Invaders`
 * Sistema de vidas
 * Escudos
 
-## 🎮 Instalación
+---
 
-1. 🔽 **Clona el repositorio**
-   ```bash
-   git clone https://github.com/PrudenK/space-invaders-rs
-   ```
+## 🎮 Para jugar
 
-2. 🛠️ **Abre tu archivo `.bashrc`**
-   ```bash
-   nano ~/.bashrc
-   ```
+### 🧩 Requisitos
+- Linux
+- Rust (cargo)
+- Terminal compatible con ANSI
 
-3. 🧩 **Añade este alias** (ajusta la ruta a tu proyecto):
-   ```bash
-   alias space_invaders='cd RustroverProjects/space-invaders-rs/ && cargo run --release'
-   ```
-4. 🔄 **Aplica los cambios**
-   ```bash
-   source ~/.bashrc
-   ```
-   
-5. 🚀 **Ejecuta `space_invaders` en tu terminal y juega**
+### 🚀 Pasos
+
+#### 1. 🔽 Clona el repositorio
+
+    git clone https://github.com/PrudenK/space-invaders-rs.git
+
+#### 2. 📂 Entra al directorio del proyecto
+
+    cd space-invaders-rs
+
+#### 3. 🛠️ Compila el proyecto
+
+    cargo build --release
+
+#### 4. ▶️ Ejecuta el juego
+
+    ./target/release/space-invaders-rs
+
+---
 
 ## 🖥️ Breve gameplay
 
